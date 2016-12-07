@@ -5,10 +5,13 @@ var AddTodo = React.createClass({
     e.preventDefault();
 
     var newTodo = this.refs.todo.value;
+
     if(newTodo.length) {
       this.refs.todo.value = '';
-      this.props.onAddItem(newTodo);
+      return this.props.onAddItem(newTodo);
     }
+    
+    this.refs.todo.focus();
   },
   render: function() {
     return (
