@@ -6,7 +6,7 @@ var TestUtils = require('react-addons-test-utils');
 
 var Todo = require('Todo');
 
-describe.only('todo', () => {
+describe('todo', () => {
   it('should exist', ()=> {
     expect(Todo).toExist();
   });
