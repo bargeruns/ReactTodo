@@ -110,7 +110,7 @@
 	$(document).foundation();
 
 	// app css
-	__webpack_require__(276);
+	__webpack_require__(277);
 
 	ReactDOM.render(React.createElement(TodoApp, null), document.getElementById('app'));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
@@ -26819,9 +26819,9 @@
 	var _ = __webpack_require__(270);
 
 	var AddTodo = __webpack_require__(272);
-	var TodoAPI = __webpack_require__(280);
-	var TodoList = __webpack_require__(273);
-	var TodoSearch = __webpack_require__(275);
+	var TodoAPI = __webpack_require__(273);
+	var TodoList = __webpack_require__(274);
+	var TodoSearch = __webpack_require__(276);
 
 	var TodoApp = React.createClass({
 	  displayName: 'TodoApp',
@@ -26865,14 +26865,18 @@
 	    });
 	  },
 	  render: function render() {
-	    var todos = this.state.todos;
+	    var _state = this.state,
+	        todos = _state.todos,
+	        showCompleted = _state.showCompleted,
+	        searchText = _state.searchText;
 
+	    var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
 
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(TodoSearch, { onSearch: this.handleSearch }),
-	      React.createElement(TodoList, { todos: todos, onToggle: this.handleToggle }),
+	      React.createElement(TodoList, { todos: filteredTodos, onToggle: this.handleToggle }),
 	      React.createElement(AddTodo, { onAddItem: this.handleAddItem })
 	    );
 	  }
@@ -48303,10 +48307,59 @@
 
 	'use strict';
 
+	var $ = __webpack_require__(7);
+	module.exports = {
+	  setTodos: function setTodos(todos) {
+	    if ($.isArray(todos)) {
+	      localStorage.setItem('todos', JSON.stringify(todos));
+	      return todos;
+	    }
+	  },
+	  getTodos: function getTodos() {
+	    var todos = JSON.parse(localStorage.getItem('todos'));
+	    if ($.isArray(todos)) {
+	      return todos;
+	    }
+	    return [];
+	  },
+	  filterTodos: function filterTodos(todos, showCompleted, searchText) {
+	    var filteredTodos = todos;
+
+	    // Filter by showCompleted
+	    filteredTodos = filteredTodos.filter(function (todo) {
+	      return !todo.completed || showCompleted;
+	    });
+	    // Filter by search
+	    filteredTodos = filteredTodos.filter(function (todo) {
+	      if (searchText.length < 3) {
+	        return true;
+	      }
+	      return todo.text.includes(searchText.toLowerCase());
+	    });
+	    // Sort with incomplete first
+	    filteredTodos.sort(function (a, b) {
+	      if (!a.completed && b.completed) {
+	        return -1;
+	      }
+	      if (a.completed && !b.completed) {
+	        return 1;
+	      }
+	      return 0;
+	    });
+	    return filteredTodos;
+	  }
+	};
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = __webpack_require__(8);
-	var Todo = __webpack_require__(274);
+	var Todo = __webpack_require__(275);
 
 	var TodoList = React.createClass({
 	  displayName: 'TodoList',
@@ -48333,7 +48386,7 @@
 	module.exports = TodoList;
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -48365,7 +48418,7 @@
 	module.exports = Todo;
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -48407,16 +48460,16 @@
 	module.exports = TodoSearch;
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(277);
+	var content = __webpack_require__(278);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(279)(content, {});
+	var update = __webpack_require__(280)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -48433,10 +48486,10 @@
 	}
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(278)();
+	exports = module.exports = __webpack_require__(279)();
 	// imports
 
 
@@ -48447,7 +48500,7 @@
 
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports) {
 
 	/*
@@ -48503,7 +48556,7 @@
 
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -48753,29 +48806,6 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var $ = __webpack_require__(7);
-	module.exports = {
-	  setTodos: function setTodos(todos) {
-	    if ($.isArray(todos)) {
-	      localStorage.setItem('todos', JSON.stringify(todos));
-	      return todos;
-	    }
-	  },
-	  getTodos: function getTodos() {
-	    var todos = JSON.parse(localStorage.getItem('todos'));
-	    if ($.isArray(todos)) {
-	      return todos;
-	    }
-	    return [];
-	  }
-	};
 
 /***/ }
 /******/ ]);
