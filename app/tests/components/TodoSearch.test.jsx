@@ -4,31 +4,39 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 
-var TodoSearch = require('TodoSearch');
+// var TodoSearch = require('TodoSearch');
+import {TodoSearch} from 'TodoSearch';
 
 describe('todo search', () => {
   it('should exist', () => {
     expect(TodoSearch).toExist();
   });
 
-  it('should call onSearch with updated input text', ()=> {
+  it('should dispatch setSearchText action on input change', ()=> {
     var searchText = 'test';
+    var action = {
+      type: 'SET_SEARCH_TEXT',
+      searchText
+    };
     var spy = expect.createSpy();
-    var todoSearch = TestUtils.renderIntoDocument(<TodoSearch onSearch={spy}/>);
+    var todoSearch = TestUtils.renderIntoDocument(<TodoSearch dispatch={spy}/>);
 
     todoSearch.refs.searchText.value = searchText;
     TestUtils.Simulate.change(todoSearch.refs.searchText);
 
-    expect(spy).toHaveBeenCalledWith(false, searchText);
+    expect(spy).toHaveBeenCalledWith(action);
   });
 
-  it('should call onSearch with checkbox value on check/uncheck', ()=> {
+  it('should dispatch toggleShowCompleted action when checkbox clicked', ()=> {
+    var action = {
+      type: 'TOGGLE_SHOW_COMPLETED'
+    };
     var spy = expect.createSpy();
-    var todoSearch = TestUtils.renderIntoDocument(<TodoSearch onSearch={spy}/>);
+    var todoSearch = TestUtils.renderIntoDocument(<TodoSearch dispatch={spy}/>);
 
-    todoSearch.refs.showCompleted.checked = 'checked';
+    todoSearch.refs.showCompleted.checked = true;
     TestUtils.Simulate.change(todoSearch.refs.showCompleted);
 
-    expect(spy).toHaveBeenCalledWith(true, '');
+    expect(spy).toHaveBeenCalledWith(action);
   });
 });

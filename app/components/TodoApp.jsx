@@ -3,10 +3,10 @@ var uuid = require('node-uuid');
 var _ = require('lodash');
 var moment = require('moment');
 
+var TodoAPI = require('TodoAPI');
 import AddTodo from 'AddTodo';
 import TodoList from 'TodoList';
-var TodoAPI = require('TodoAPI');
-var TodoSearch = require('TodoSearch');
+import TodoSearch from 'TodoSearch';
 
 var TodoApp = React.createClass({
   getInitialState: function () {
