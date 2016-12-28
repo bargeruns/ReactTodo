@@ -91,38 +91,62 @@ describe('Actions', () => {
   });
 
   describe('Tests with Firebase data', () => {
-    let testTodoRef;
-
+    let testTodoRef = {};
     beforeEach((done) => {
-      testTodoRef = firebaseRef.child('todos').push();
-      testTodoRef.set({
-        text: 'something to do',
-        completed: false,
-        createdAt: 33333
-      }).then(() => done());
+      const todosRef = firebaseRef.child('todos');
+      todosRef.remove()
+        .then(() => {
+          testTodoRef = firebaseRef.child('todos').push();
+
+          return testTodoRef.set({
+            text: 'something to do',
+            completed: false,
+            createdAt: 33333
+          })
+          .then(() => done());
+        })
+        .catch(done);
     });
 
     afterEach((done) => {
-      testTodoRef.remove().then(() => done());
+      firebaseRef.child(`todos/${testTodoRef.key}`).remove().then(() => done());
     });
 
-    it('Should toggle todo and dispatch UPDATE_TODO action', (done) => {
-      const store = createMockStore();
+    it('should toggle todo and dispatch UPDATE_TODO action', (done) => {
+      const store = createMockStore({});
       const action = actions.startToggleTodo(testTodoRef.key, true);
 
-      store.dispatch(action).then(()=> {
+      store.dispatch(action).then(() => {
         const mockActions = store.getActions();
 
         expect(mockActions[0]).toInclude({
           type: 'UPDATE_TODO',
           id: testTodoRef.key
         });
-        expect(mockActions[0]).toInclude({
+        expect(mockActions[0].updates).toInclude({
           completed: true
         });
         expect(mockActions[0].updates.completedAt).toExist();
+
         done();
       }, done());
+    });
+
+
+    it('should populate todos and dispatch ADD_TODOS action', (done) => {
+      const store = createMockStore();
+      const action = actions.startAddTodos();
+
+      store.dispatch(action)
+        .then(() => {
+          const mockActions = store.getActions();
+
+          expect(mockActions[0].type).toEqual('ADD_TODOS');
+          expect(mockActions[0].todos.length).toEqual(1);
+          expect(mockActions[0].todos[0].text).toEqual('something to do');
+
+          done();
+        }, done());
     });
   });
 });
