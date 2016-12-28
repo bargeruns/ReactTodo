@@ -1,8 +1,8 @@
-var $ = require('jQuery');
-var expect = require('expect');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
+import $ from 'jQuery';
+import expect from 'expect';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 import * as actions from 'actions';
 import {Todo} from 'Todo';
@@ -13,15 +13,15 @@ describe('todo', () => {
   });
 
   it('should dispatch UPDATE_TODO action on click', ()=> {
-    var todoData = {
+    const todoData = {
       id: 199,
       text: 'Write todo test',
       completed: true
     };
-    var action = actions.startToggleTodo(todoData.id, !todoData.completed);
-    var spy = expect.createSpy();
-    var todo = TestUtils.renderIntoDocument(<Todo {...todoData} dispatch={spy}/>);
-    var $el = $(ReactDOM.findDOMNode(todo));
+    const action = actions.startToggleTodo(todoData.id, !todoData.completed);
+    const spy = expect.createSpy();
+    const todo = TestUtils.renderIntoDocument(<Todo {...todoData} dispatch={spy}/>);
+    const $el = $(ReactDOM.findDOMNode(todo));
 
     TestUtils.Simulate.click($el[0]);
 

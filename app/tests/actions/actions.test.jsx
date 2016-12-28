@@ -1,24 +1,24 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-var expect = require('expect');
+import expect from 'expect';
 import firebase, {firebaseRef} from 'app/firebase';
-var actions = require('actions');
+import * as actions from 'actions';
 
-var createMockStore = configureMockStore([thunk]);
+const createMockStore = configureMockStore([thunk]);
 
 describe('Actions', () => {
   it('should generate search text action', () => {
-    var action = {
+    const action = {
       type: 'SET_SEARCH_TEXT',
       searchText: 'search'
     };
-    var res = actions.setSearchText(action.searchText);
+    const res = actions.setSearchText(action.searchText);
 
     expect(res).toEqual(action);
   });
 
   it('should generate addTodo action', () => {
-    var action = {
+    const action = {
       type: 'ADD_TODO',
       todo: {
         id: '457',
@@ -27,7 +27,7 @@ describe('Actions', () => {
         createdAt: 500
       }
     };
-    var res = actions.addTodo(action.todo);
+    const res = actions.addTodo(action.todo);
 
     expect(res).toEqual(action);
   });
@@ -49,7 +49,7 @@ describe('Actions', () => {
   });
 
   it('should generate addTodos action', () => {
-    var todos = [
+    const todos = [
       {
         id: 1,
         text: 'test',
@@ -58,40 +58,40 @@ describe('Actions', () => {
         createdAt: 3000
       }
     ];
-    var action = {
+    const action = {
       type: 'ADD_TODOS',
       todos
     };
-    var res = actions.addTodos(todos); 
+    const res = actions.addTodos(todos); 
     expect(res).toEqual(action);
   });
   
   it('should generate toggleShowCompleted action', () => {
-    var action = {
+    const action = {
       type: 'TOGGLE_SHOW_COMPLETED'
     }
-    var res = actions.toggleShowCompleted();
+    const res = actions.toggleShowCompleted();
 
     expect(res).toEqual(action);
   });
 
   it('should generate updateTodo action', () => {
-    var updates = {
+    const updates = {
       completed: true,
       completedAt: 500
     };
-    var action = {
+    const action = {
       type: 'UPDATE_TODO',
       id: 45,
       updates
     };
-    var res = actions.updateTodo(45, updates);
+    const res = actions.updateTodo(45, updates);
 
     expect(res).toEqual(action);
   });
 
   describe('Tests with Firebase data', () => {
-    var testTodoRef;
+    let testTodoRef;
 
     beforeEach((done) => {
       testTodoRef = firebaseRef.child('todos').push();

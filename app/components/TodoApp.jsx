@@ -1,13 +1,10 @@
-var React = require('react');
-var uuid = require('node-uuid');
-var _ = require('lodash');
-var moment = require('moment');
+import React from 'react';
 
 import AddTodo from 'AddTodo';
 import TodoList from 'TodoList';
 import TodoSearch from 'TodoSearch';
 
-var TodoApp = React.createClass({
+const TodoApp = React.createClass({
   render: function () {
     return (
       <div>
