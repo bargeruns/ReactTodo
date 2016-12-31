@@ -1,12 +1,12 @@
-var React = require('react');
-var {connect} = require('react-redux');
-var actions = require('actions');
+import React from 'react';
+import {connect} from 'react-redux';
+import * as actions from 'actions';
 
-export var AddTodo = React.createClass({
+export const AddTodo = React.createClass({
   onSubmit: function(e) {
     e.preventDefault();
-    var {dispatch} = this.props;
-    var newTodo = this.refs.todo.value;
+    let {dispatch} = this.props;
+    let newTodo = this.refs.todo.value;
 
     if(newTodo.length) {
       this.refs.todo.value = '';

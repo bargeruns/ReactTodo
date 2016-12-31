@@ -1,11 +1,11 @@
-var $ = require('jQuery');
-var expect = require('expect');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
+import $ from 'jQuery';
+import expect from 'expect';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 import * as actions from 'actions';
-var {AddTodo} = require('AddTodo');
+import {AddTodo} from 'app/components/AddTodo';
 
 describe('AddTodo component', ()=> { 
   it('should exist', ()=> {
@@ -14,12 +14,12 @@ describe('AddTodo component', ()=> {
 
   describe('adding todos', ()=> {
     it('should dispatch ADD_TODO action on valid input', () => {
-      var todoText = 'Check mail';
-      var action = actions.startAddTodo(todoText); 
-      var spy = expect.createSpy();
-      var addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy} />);
-      var $el = $(ReactDOM.findDOMNode(addTodo));
-      var form = $($el.find('form'));
+      const todoText = 'Check mail';
+      const action = actions.startAddTodo(todoText); 
+      const spy = expect.createSpy();
+      const addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy} />);
+      const $el = $(ReactDOM.findDOMNode(addTodo));
+      const form = $($el.find('form'));
 
       addTodo.refs.todo.value = action.text;
       TestUtils.Simulate.submit($el.find('form')[0]);
@@ -27,11 +27,11 @@ describe('AddTodo component', ()=> {
       expect(spy).toHaveBeenCalledWith(action); 
     });
     it('should not dispatch addTodo action if form empty', () => {
-      var todoText = '';
-      var spy = expect.createSpy();
-      var addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy} />);
-      var $el = $(ReactDOM.findDOMNode(addTodo));
-      var form = $($el.find('form'));
+      const todoText = '';
+      const spy = expect.createSpy();
+      const addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy} />);
+      const $el = $(ReactDOM.findDOMNode(addTodo));
+      const form = $($el.find('form'));
 
       addTodo.refs.todo.value = '';
       TestUtils.Simulate.submit($el.find('form')[0]);
