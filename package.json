@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "React-Todos",
   "version": "1.0.0",
-  "description": "Simple react app",
+  "description": "Simple react todo app",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test karma start",
@@ -32,7 +32,7 @@
     "react-addons-test-utils": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^5.0.1",
-    "react-router": "^2.0.0",
+    "react-router": "^2.8.1",
     "redux": "^3.6.0",
     "redux-mock-store": "^1.2.1",
     "redux-thunk": "^2.1.0",

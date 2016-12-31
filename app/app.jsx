@@ -20,7 +20,11 @@ require('style!css!sass!applicationStyles');
 
 ReactDOM.render(
   <Provider store={store}>
-    <TodoApp/>
+    <Router>
+      <Route path="/" component={TodoApp}>
+        <IndexRoute component={TodoApp}/>
+      </Route>
+    </Router>
   </Provider>, 
   document.getElementById('app')
 );
