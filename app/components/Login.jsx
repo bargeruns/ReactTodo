@@ -1,6 +1,12 @@
 import React from 'react';
+import * as Redux from 'react-redux';
+import * as actions from 'actions';
 
 export const Login = React.createClass({
+  onLogin() {
+    let {dispatch} = this.props;
+    dispatch(actions.startLogin());
+  },
   render() {
     return (
       <div>
@@ -12,7 +18,7 @@ export const Login = React.createClass({
               <p>
                 Login with your Github account below.
               </p>
-              <button type="" className="button">Login with Github</button>
+              <button type="" className="button" onClick={this.onLogin}>Login with Github</button>
             </div>
           </div>
         </div>
@@ -22,4 +28,4 @@ export const Login = React.createClass({
 });
 
 
-export default Login;
+export default Redux.connect()(Login);

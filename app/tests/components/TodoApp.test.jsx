@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 import * as configureStore from 'configureStore';
-import TodoApp from 'TodoApp';
+import {TodoApp} from 'TodoApp';
 import TodoList from 'TodoList';
 
 describe('todo app', () => {
