@@ -3,9 +3,10 @@ import * as Redux from 'react-redux';
 import * as actions from 'actions';
 
 export const Login = React.createClass({
-  onLogin() {
+  onLogin(provider) {
     let {dispatch} = this.props;
-    dispatch(actions.startLogin());
+    if (provider === 'github') dispatch(actions.startLoginGithub());
+    dispatch(actions.startLoginGoogle());
   },
   render() {
     return (
@@ -16,9 +17,14 @@ export const Login = React.createClass({
             <div className="callout callout-auth">
               <h3>Login</h3>
               <p>
-                Login with your Github account below.
+                Login with your Github or Google account below.
               </p>
-              <button type="" className="button" onClick={this.onLogin}>Login with Github</button>
+              <div className="row">
+                <button type="" className="button" onClick={() => this.onLogin('github')}>Login with Github</button>
+              </div>
+              <div className="row">
+                <button type="" className="button" onClick={() => this.onLogin('google')}>Login with Google</button>
+              </div>
             </div>
           </div>
         </div>
